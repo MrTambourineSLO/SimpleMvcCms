@@ -16,6 +16,29 @@ namespace MvcCMS.Areas.Admin.Controllers
         {
             return View();
         }
+
+
+        // /admin/post/create 
+        [HttpGet]
+        [Route("create")]
+        public ActionResult Create()
+        {
+            var model = new Post();
+
+            return View(model);
+        }
+        // /admin/post/create 
+        [HttpPost]
+        [Route("create")]
+        public ActionResult Create(Post model)
+        {
+            if (!ModelState.IsValid())
+            {
+                return View(model);
+            }
+            //TODO: update model in data store
+            return RedirectToAction("Index");
+        }
         // /admin/post/edit/post-to-edit
         [HttpGet]
         [Route("edit/{id}")]
@@ -25,7 +48,6 @@ namespace MvcCMS.Areas.Admin.Controllers
             var model = new Post();
 
             return View(model);
-
 
         }
         [HttpPost]
