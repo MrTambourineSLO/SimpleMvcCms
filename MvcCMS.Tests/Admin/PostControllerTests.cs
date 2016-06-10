@@ -1,10 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MvcCMS.Tests
+namespace MvcCMS.Tests.Admin
 {
     [TestClass]
-    public class UnitTest1
+    public class PostControllerTests
     {
         [TestMethod]
         public void TestMethod1()

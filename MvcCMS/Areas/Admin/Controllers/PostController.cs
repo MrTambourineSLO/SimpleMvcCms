@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MvcCMS.Data;
 using MvcCMS.Models;
 
 namespace MvcCMS.Areas.Admin.Controllers
@@ -11,6 +12,11 @@ namespace MvcCMS.Areas.Admin.Controllers
     [RoutePrefix("post")]
     public class PostController : Controller
     {
+        private readonly IPostRepository _repository ;
+        public PostController (IPostRepository repository)
+        {
+            _repository = repository;
+        }
         // /admin/post
         public ActionResult Index()
         {
