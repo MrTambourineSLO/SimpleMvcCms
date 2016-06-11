@@ -51,10 +51,15 @@ namespace MvcCMS.Areas.Admin.Controllers
         [Route("edit/{id}")]
         public ActionResult Edit(string id)
         {
+            var post = _repository.Get(id);
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
             //TODO: to retrive the model from the data store
             var model = new Post();
 
-            return View(model);
+            return View(post);
 
         }
         [HttpPost]
@@ -62,6 +67,7 @@ namespace MvcCMS.Areas.Admin.Controllers
         [Route("edit/{id}")]
         public ActionResult Edit(Post model)
         {
+
             if (!ModelState.IsValid)
             {
                 return View(model);
