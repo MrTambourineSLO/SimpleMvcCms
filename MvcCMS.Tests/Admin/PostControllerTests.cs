@@ -98,5 +98,22 @@ namespace MvcCMS.Tests.Admin
 
             Assert.AreEqual("test-post-2", model.Id);
         }
+        [TestMethod]
+        public void Edit_PostRequestCallsEditAndRedirects()
+        {
+
+            var repo = Mock.Create<IPostRepository>();
+            var controller = new PostController(repo);
+
+            //We must call edit method w/ any arguments
+            Mock.Arrange(() => repo.Edit(Arg.IsAny<string>(),Arg.IsAny<Post>())).MustBeCalled();
+            
+            var result = controller.Edit("foo", new Post() { Id = "test-post-2" });
+
+            //Assert that repo's edit method was called
+            Mock.Assert(repo);
+
+            Assert.IsTrue(result is RedirectToRouteResult);
+        }
     }
 }
