@@ -48,10 +48,10 @@ namespace MvcCMS.Areas.Admin.Controllers
         }
         // /admin/post/edit/post-to-edit
         [HttpGet]
-        [Route("edit/{id}")]
-        public ActionResult Edit(string id)
+        [Route("edit/{postId}")]
+        public ActionResult Edit(string postId)
         {
-            var post = _repository.Get(id);
+            var post = _repository.Get(postId);
             if (post == null)
             {
                 return HttpNotFound();
@@ -64,15 +64,24 @@ namespace MvcCMS.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken] 
-        [Route("edit/{id}")]
-        public ActionResult Edit(Post model)
+        [Route("edit/{postId}")]
+        public ActionResult Edit(string postId, Post model)
         {
+            //1st we check if we already have a post w/ postId
+            var post = _repository.Get(postId);
+
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
 
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
             //TODO: update model in data store
+            _repository.Edit(postId, model);
+
             return RedirectToAction("Index");
 
         }

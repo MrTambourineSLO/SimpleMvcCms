@@ -58,5 +58,23 @@ namespace MvcCMS.Tests.Admin
 
             Assert.IsTrue(result is HttpNotFoundResult);
         }
+        [TestMethod]
+        public void Edit_PostRequestNotFoundResult()
+        {
+
+            var id = "test-post";
+            var repo = Mock.Create<IPostRepository>();
+            var controller = new PostController(repo);
+
+
+            //Whenever we call repo.Get(id) we want to have null 
+            Mock.Arrange(() => repo.Get(id)).
+                Returns((Post)null);
+
+            //We just need an AR not VR
+            var result = controller.Edit(id, new Post());
+
+            Assert.IsTrue(result is HttpNotFoundResult);
+        }
     }
 }

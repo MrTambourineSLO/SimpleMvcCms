@@ -10,5 +10,7 @@ namespace MvcCMS.Data
     public interface IPostRepository
     {
         Post Get(object id);
+
+        void Edit(string id, Post updatedItem);
     }
 }
