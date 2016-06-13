@@ -27,10 +27,10 @@ namespace MvcCMS.Tests.Admin
              */
             Mock.Arrange(() => repo.Get(id)).
                 Returns(new Post {Id = id});
-            
-            
-            
-            
+
+
+
+
             //Casting to viewresult which is an implementation of Abstract class ActionResult
             //we use AR in Cs because we're not sure we'll return a view (we could also perform say a redirect.
             var result = (ViewResult) controller.Edit(id);
@@ -38,7 +38,25 @@ namespace MvcCMS.Tests.Admin
             var model = (Post) result.Model;
 
 
-            Assert.AreEqual(id,model.Id);
+            Assert.AreEqual(id, model.Id);
+        }
+        [TestMethod]
+        public void Edit_GetRequestNotFoundResult()
+        {
+
+            var id = "test-post";
+            var repo = Mock.Create<IPostRepository>();
+            var controller = new PostController(repo);
+
+
+            //Whenever we call repo.Get(id) we want to have null 
+            Mock.Arrange(() => repo.Get(id)).
+                Returns((Post) null);
+
+            //We just need an AR not VR
+            var result = controller.Edit(id);
+
+            Assert.IsTrue(result is HttpNotFoundResult);
         }
     }
 }
