@@ -20,7 +20,8 @@ namespace MvcCMS.Areas.Admin.Controllers
         // /admin/post
         public ActionResult Index()
         {
-            return View();
+            var posts = _repository.GetAll();
+            return View(posts);
         }
 
 
@@ -43,7 +44,7 @@ namespace MvcCMS.Areas.Admin.Controllers
             {
                 return View(model);
             }
-            //TODO: update model in data store
+            _repository.Create(model);
             return RedirectToAction("Index");
         }
         // /admin/post/edit/post-to-edit
