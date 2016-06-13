@@ -76,5 +76,27 @@ namespace MvcCMS.Tests.Admin
 
             Assert.IsTrue(result is HttpNotFoundResult);
         }
+        [TestMethod]
+        public void Edit_PostRequestSendsPostToVIew()
+        {
+            
+            var id = "test-post";
+            
+            var repo = Mock.Create<IPostRepository>();
+            var controller = new PostController(repo);
+
+            
+            Mock.Arrange(() => repo.Get(id)).
+                Returns(new Post { Id = id });
+            //We mock an error
+            controller.ViewData.ModelState.AddModelError("key","error message");
+
+            var result = (ViewResult)controller.Edit(id, new Post(){Id = "test-post-2"});
+
+            var model = (Post)result.Model;
+
+
+            Assert.AreEqual("test-post-2", model.Id);
+        }
     }
 }
