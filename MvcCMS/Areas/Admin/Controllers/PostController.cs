@@ -57,11 +57,9 @@ namespace MvcCMS.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            //TODO: to retrive the model from the data store
             var model = new Post();
 
             return View(post);
-
         }
         [HttpPost]
         [ValidateAntiForgeryToken] 
@@ -80,11 +78,11 @@ namespace MvcCMS.Areas.Admin.Controllers
             {
                 return View(model);
             }
-            //TODO: update model in data store
+            
             _repository.Edit(postId, model);
 
             return RedirectToAction("Index");
-
         }
+
     }
 } 
